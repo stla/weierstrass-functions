@@ -5,7 +5,8 @@ import           Math.Eisenstein
                                       ( eisensteinE4,
                                         eisensteinE6,
                                         kleinJ,
-                                        agm )
+                                        agm,
+                                        kleinJinv )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
 
@@ -56,6 +57,11 @@ main = defaultMain $
     testCase "a value of agm" $ do
       let expected =  1.19814023473559 -- 2*pi^(3/2)*sqrt(2) / gamma(1/4)^2
           obtained = agm 1 (sqrt 2)
-      assertApproxEqual "" 14 expected obtained
+      assertApproxEqual "" 14 expected obtained,
+
+    testCase "kleinJ o kleinJinv = id" $ do
+      let expected =  0.2 :+ 0.2
+          obtained = kleinJ (kleinJinv (0.2 :+ 0.2))
+      assertApproxEqual "" 12 expected obtained
 
   ]

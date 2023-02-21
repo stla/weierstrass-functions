@@ -2,6 +2,7 @@ module Math.Eisenstein
     ( eisensteinE4,
       eisensteinE6,
       kleinJ,
+      kleinJinv,
       modularDiscriminant,
       agm
     ) where
@@ -56,3 +57,18 @@ agm x y =
     then 0
     else pi/4 * (x + y) / ellipticF' 1e-15 (pi/2) (((x-y)/(x+y))**2)
 
+-- | Inverse Klein-J function
+kleinJinv :: 
+    Complex Double
+ -> Complex Double
+kleinJinv j = 
+  if j == 0
+    then 0.5 + i_ * sqrt 3 / 2
+    else i_ * agm 1 (sqrt(1 - lbd)) / agm 1 (sqrt lbd)
+  where
+    j2 = j * j
+    j3 = j2 * j
+    t = -j3 + 2304 * j2 + 12288 * sqrt(3 * (1728 * j2 - j3)) - 884736 * j
+    u = t ** (1/3)
+    x = 4 + (u - j) / 192 - (1536 * j - j2) / (192 * u)
+    lbd = -(-1 - sqrt(1 - x)) / 2
