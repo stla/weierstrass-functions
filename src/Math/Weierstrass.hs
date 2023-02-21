@@ -4,7 +4,7 @@ module Math.Weierstrass
     ) where
 import           Data.Complex     ( Complex(..) )
 import           Math.Eisenstein  ( eisensteinE4, eisensteinE6, kleinJinv) 
-import           Math.JacobiTheta ( jtheta1, jtheta2, jtheta3, jtheta4 )
+import           Math.JacobiTheta ( jtheta2, jtheta3 )
 import           Math.Gamma       ( gamma )
 
 
