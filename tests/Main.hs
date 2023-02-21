@@ -4,7 +4,8 @@ import           Data.Complex         ( Complex(..) )
 import           Math.Eisenstein
                                       ( eisensteinE4,
                                         eisensteinE6,
-                                        kleinJ )
+                                        kleinJ,
+                                        agm )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
 
@@ -50,6 +51,11 @@ main = defaultMain $
     testCase "a value of Klein J-function" $ do
       let expected = 66**3
           obtained = kleinJ (2 * i_)
-      assertApproxEqual "" 7 expected obtained
+      assertApproxEqual "" 7 expected obtained,
+
+    testCase "a value of agm" $ do
+      let expected =  1.19814023473559 -- 2*pi^(3/2)*sqrt(2) / gamma(1/4)^2
+          obtained = agm 1 (sqrt 2)
+      assertApproxEqual "" 14 expected obtained
 
   ]

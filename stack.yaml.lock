@@ -11,6 +11,13 @@ packages:
       size: 427
   original:
     hackage: jacobi-theta-0.1.0.0
+- completed:
+    hackage: elliptic-integrals-0.1.0.0@sha256:f96e03260c1fc51f8e1a65ef2d4d36600ac36eac5d50c41a444b676791cd9292,1484
+    pantry-tree:
+      sha256: 61dded2aca9b2c0de5a84083582a73dab4418c8e09950027d814338daca33caa
+      size: 674
+  original:
+    hackage: elliptic-integrals-0.1.0.0
 snapshots:
 - completed:
     sha256: adbc602422dde10cc330175da7de8609e70afc41449a7e2d6e8b1827aa0e5008

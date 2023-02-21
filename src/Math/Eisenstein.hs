@@ -2,10 +2,13 @@ module Math.Eisenstein
     ( eisensteinE4,
       eisensteinE6,
       kleinJ,
-      modularDiscriminant
+      modularDiscriminant,
+      agm
     ) where
-import           Data.Complex         ( Complex(..) )
-import           Math.JacobiTheta     ( jtheta2, jtheta3, jtheta4 )
+import           Data.Complex           ( Complex(..) )
+import           Math.EllipticIntegrals ( ellipticF' )
+import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4 )
+
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -42,3 +45,14 @@ kleinJ ::
  -> Complex Double
 kleinJ tau = 
   eisensteinE4 tau ** 3 / modularDiscriminant tau
+
+-- | Arithmetic-geometric mean
+agm :: 
+    Complex Double -- ^ x 
+ -> Complex Double -- ^ y
+ -> Complex Double
+agm x y = 
+  if x == 0 || y == 0 || x + y == 0
+    then 0
+    else pi/4 * (x + y) / ellipticF' 1e-15 (pi/2) (((x-y)/(x+y))**2)
+

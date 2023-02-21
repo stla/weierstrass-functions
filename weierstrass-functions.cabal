@@ -19,6 +19,7 @@ library
   exposed-modules:     Math.Eisenstein
   build-depends:       base >= 4.7 && < 5
                      , jacobi-theta >= 0.1.0.0
+                     , elliptic-integrals >= 0.1.0.0
   default-language:    Haskell2010
   ghc-options:         -Wall
                        -Wcompat
