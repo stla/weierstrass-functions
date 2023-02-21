@@ -3,7 +3,8 @@ import           Approx               ( assertApproxEqual )
 import           Data.Complex         ( Complex(..) )
 import           Math.Eisenstein
                                       ( eisensteinE4,
-                                        eisensteinE6 )
+                                        eisensteinE6,
+                                        kleinJ )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
 
@@ -44,6 +45,11 @@ main = defaultMain $
     testCase "E6 is modular - condition 2" $ do
       let e6  = eisensteinE6 (-1 / tau3) 
           e6' = tau3**6 * eisensteinE6 tau3
-      assertApproxEqual "" 10 e6 e6'
+      assertApproxEqual "" 10 e6 e6',
+
+    testCase "a value of Klein J-function" $ do
+      let expected = 66**3
+          obtained = kleinJ (2 * i_)
+      assertApproxEqual "" 7 expected obtained
 
   ]

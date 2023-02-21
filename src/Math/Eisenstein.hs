@@ -1,6 +1,8 @@
 module Math.Eisenstein
     ( eisensteinE4,
-      eisensteinE6
+      eisensteinE6,
+      kleinJ,
+      modularDiscriminant
     ) where
 import           Data.Complex         ( Complex(..) )
 import           Math.JacobiTheta     ( jtheta2, jtheta3, jtheta4 )
@@ -13,7 +15,7 @@ eisensteinE4 ::
     Complex Double -- ^ tau
  -> Complex Double
 eisensteinE4 tau = 
-  jtheta2 0 q ** 8 + jtheta3 0 q ** 8 + jtheta4 0 q ** 8 
+  (jtheta2 0 q ** 8 + jtheta3 0 q ** 8 + jtheta4 0 q ** 8) / 2 
     where
       q = exp (i_ * pi * tau)
 
@@ -27,3 +29,16 @@ eisensteinE6 tau =
     where
       q = exp (i_ * pi * tau)
 
+-- | Modular discriminant
+modularDiscriminant ::
+    Complex Double -- ^ tau
+ -> Complex Double
+modularDiscriminant tau = 
+  (eisensteinE4 tau ** 3 - eisensteinE6 tau ** 2) / 1728
+
+-- | Klein J-function
+kleinJ :: 
+    Complex Double -- ^ tau
+ -> Complex Double
+kleinJ tau = 
+  eisensteinE4 tau ** 3 / modularDiscriminant tau
