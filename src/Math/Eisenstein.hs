@@ -63,7 +63,7 @@ kleinJinv ::
  -> Complex Double
 kleinJinv j = 
   if j == 0
-    then 0.5 + i_ * sqrt 3 / 2
+    then 0.5 :+ (sqrt 3 / 2)
     else i_ * agm 1 (sqrt(1 - lbd)) / agm 1 (sqrt lbd)
   where
     j2 = j * j
