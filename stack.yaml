@@ -7,4 +7,6 @@ extra-deps:
 - jacobi-theta-0.1.0.0
 - elliptic-integrals-0.1.0.0
 - gamma-0.10.0.0
+- continued-fractions-0.10.0.2
+- converge-0.1.0.1
 
