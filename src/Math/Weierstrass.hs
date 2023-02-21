@@ -1,5 +1,6 @@
 module Math.Weierstrass
-    ( halfPeriods
+    ( halfPeriods,
+      ellipticInvariants
     ) where
 import           Data.Complex     ( Complex(..) )
 import           Math.Eisenstein  ( eisensteinE4, eisensteinE6, kleinJinv) 
@@ -50,3 +51,27 @@ halfPeriods ::
 halfPeriods g2 g3 = (omega1, tau * omega1)
   where
     (omega1, tau) = omega1_and_tau g2 g3
+
+g_from_omega1_and_tau :: 
+  Complex Double -> Complex Double -> (Complex Double, Complex Double)
+g_from_omega1_and_tau omega1 tau = (g2, g3)
+  where
+    j2 = jtheta2 0 tau
+    j3 = jtheta3 0 tau
+    j2pow4  = j2 ** 4
+    j2pow8  = j2pow4 * j2pow4
+    j2pow12 = j2pow4 * j2pow8
+    j3pow4  = j3 ** 4
+    j3pow8  = j3pow4 * j3pow4
+    j3pow12 = j3pow4 * j3pow8
+    g2 = 2/3 * (pi / omega1)**4 * (j2pow8 - j2pow4 * j3pow4 + j3pow8)
+    g3 = 4/27 * (pi/omega1)**6 
+      * (j2pow12 - ((1.5 * j2pow8 * j3pow4) + (1.5 * j2pow4 * j3pow8)) + j3pow12)
+
+-- | Elliptic invariants from half-periods.
+ellipticInvariants :: 
+    Complex Double -- ^ omega1
+ -> Complex Double -- ^ omega2
+ -> (Complex Double, Complex Double) -- ^ g2, g3
+ellipticInvariants omega1 omega2 = 
+  g_from_omega1_and_tau omega1 (omega2 / omega1)
