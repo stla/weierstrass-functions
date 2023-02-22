@@ -1,5 +1,7 @@
 module Math.Eisenstein
-    ( eisensteinE4,
+    ( lambda,
+      eisensteinE2,
+      eisensteinE4,
       eisensteinE6,
       kleinJ,
       kleinJinv,
@@ -9,12 +11,34 @@ module Math.Eisenstein
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
-import           Math.EllipticIntegrals ( ellipticF' )
+import           Math.EllipticIntegrals ( ellipticF', ellipticE' )
 import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4 )
 
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
+
+-- | Eisenstein series of weight 2
+lambda :: 
+    Complex Double -- ^ tau
+ -> Complex Double
+lambda tau = (j2 / j3) %^% 4
+    where
+      q = exp (i_ * pi * tau)
+      j2 = jtheta2 0 q
+      j3 = jtheta3 0 q
+
+-- | Eisenstein series of weight 2
+eisensteinE2 :: 
+    Complex Double -- ^ tau
+ -> Complex Double
+eisensteinE2 tau = 
+  6 / pi * ellE * j3 - j3 * j3 - j4
+    where
+      q = exp (i_ * pi * tau)
+      j3 = jtheta3 0 q %^% 2
+      j4 = jtheta3 0 q %^% 4
+      ellE = ellipticE' 1e-14 (pi/2) (lambda tau)
 
 -- | Eisenstein series of weight 4
 eisensteinE4 :: 
