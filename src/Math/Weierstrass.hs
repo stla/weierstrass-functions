@@ -2,17 +2,20 @@ module Math.Weierstrass
     ( halfPeriods,
       ellipticInvariants,
       weierstrassP,
-      weierstrassPdash
+      weierstrassPdash,
+      weierstrassPinv
     ) where
-import           Data.Complex     ( Complex(..) )
-import           Internal         ( (%^%) )
-import           Math.Eisenstein  ( eisensteinE4, eisensteinE6, kleinJinv) 
-import           Math.JacobiTheta ( jtheta2, 
-                                    jtheta3, 
-                                    jtheta1, 
-                                    jtheta4,
-                                    jtheta1Dash )
-import           Math.Gamma       ( gamma )
+import           Data.Complex           ( Complex(..) )
+import           Internal               ( (%^%) )
+import           Math.Eisenstein        ( eisensteinE4, eisensteinE6, kleinJinv) 
+import           Math.JacobiTheta       ( jtheta2, 
+                                          jtheta3, 
+                                          jtheta1, 
+                                          jtheta4,
+                                          jtheta1Dash )
+import           Math.Gamma             ( gamma )
+import           Math.EllipticIntegrals ( carlsonRF' )
+
 
 
 i_ :: Complex Double
@@ -134,4 +137,16 @@ weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
     j4zero = jtheta4 0 q
     f = j1dash %^% 3 / (j1 %^% 3 * j2zero * j3zero * j4zero)
 
+-- | Inverse of Weierstrass p-function
+weierstrassPinv ::
+    Complex Double -- ^ w
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassPinv w g2 g3 = carlsonRF' 1e-14 (w - e1) (w - e2) (w - e3)
+  where
+    (omega1, omega2) = halfPeriods g2 g3
+    e1 = weierstrassP omega1 g2 g3
+    e2 = weierstrassP omega2 g2 g3
+    e3 = weierstrassP (-omega1 - omega2) g2 g3
 

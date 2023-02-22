@@ -12,7 +12,8 @@ import           Test.Tasty.HUnit     ( testCase )
 import           Math.Weierstrass     ( halfPeriods, 
                                         ellipticInvariants,
                                         weierstrassP,
-                                        weierstrassPdash )
+                                        weierstrassPdash,
+                                        weierstrassPinv )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -102,6 +103,15 @@ main = defaultMain $
           wdash = weierstrassPdash z g2 g3
           left = wdash ** 2
           right = 4 * w ** 3 - g2 * w - g3
-      assertApproxEqual "" 11 left right
+      assertApproxEqual "" 11 left right,
+
+    testCase "weierstrassPinv works" $ do
+      let w = 0.1 :+ 1
+          g2 = 2 :+ 2
+          g3 = 0 :+ 3
+          z = weierstrassPinv w g2 g3
+          obtained = weierstrassP z g2 g3
+          expected = w
+      assertApproxEqual "" 13 expected obtained
 
   ]
