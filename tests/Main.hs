@@ -17,9 +17,6 @@ import           Math.Weierstrass     ( halfPeriods,
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
 
-z :: Complex Double
-z = 1.0 :+ 1.0
-
 tau1 :: Complex Double 
 tau1 = i_
 
