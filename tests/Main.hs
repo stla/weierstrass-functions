@@ -15,7 +15,8 @@ import           Math.Weierstrass     ( halfPeriods,
                                         ellipticInvariants,
                                         weierstrassP,
                                         weierstrassPdash,
-                                        weierstrassPinv )
+                                        weierstrassPinv,
+                                        weierstrassSigma )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -125,6 +126,11 @@ main = defaultMain $
       let x = sqrt 2
           expected = 1
           obtained = lambda (i_ * x) + lambda (i_ / x)
-      assertApproxEqual "" 14 expected obtained
+      assertApproxEqual "" 14 expected obtained,
+
+    testCase "a value of weierstrassSigma" $ do
+      let expected = 1.8646253716 :+ (-0.3066001355)
+          obtained = weierstrassSigma 2 1 (2 * i_)
+      assertApproxEqual "" 10 expected obtained
 
   ]

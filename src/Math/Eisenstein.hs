@@ -38,7 +38,7 @@ eisensteinE2 tau =
     where
       q = exp (i_ * pi * tau)
       j3 = jtheta3 0 q %^% 2
-      j4 = jtheta3 0 q %^% 4
+      j4 = jtheta4 0 q %^% 4
       ellE = ellipticE' 1e-14 (pi/2) (lambda tau)
 
 -- | Eisenstein series of weight 4

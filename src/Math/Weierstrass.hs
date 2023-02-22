@@ -160,13 +160,13 @@ weierstrassSigma ::
  -> Complex Double -- ^ elliptic invariant g2
  -> Complex Double -- ^ elliptic invariant g3
  -> Complex Double
-weierstrassSigma z g2 g3 = w1 * exp (h * z * z / w1 / pi) * j1 / j1dash
+weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
   where
     (omega1, omega2) = halfPeriods g2 g3
     tau = omega2 / omega1
     q = exp (i_ * pi * tau)
-    w1 = -2 * omega1
+    w1 = -2 * omega1 / pi
     z1 = z / w1
-    j1 = jtheta1 (pi * z1) q
+    j1 = jtheta1 z1 q
     j1dash = jtheta1Dash 0 q
-    h = pi * pi / (6 * w1) * jtheta1DashDashDash0 tau
+    h = - pi / (6 * w1) * jtheta1DashDashDash0 tau / j1dash
