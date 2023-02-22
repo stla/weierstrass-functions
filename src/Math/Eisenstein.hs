@@ -7,7 +7,8 @@ module Math.Eisenstein
       kleinJinv,
       modularDiscriminant,
       agm,
-      etaDedekind
+      etaDedekind,
+      jtheta1DashDashDash0
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
@@ -109,5 +110,10 @@ etaDedekind tau = exp (ipitau / 12) * j3
     q = exp (3 * ipitau)
     j3 = jtheta3 (pi / 2 * (tau + 1)) q
 
+-- | Third derivative at 0 of the first Jacobi theta function
+jtheta1DashDashDash0 :: 
+    Complex Double -- ^ tau
+ -> Complex Double
+jtheta1DashDashDash0 tau = -2 * etaDedekind tau %^% 3 * eisensteinE2 tau 
 
 
