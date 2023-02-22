@@ -16,7 +16,8 @@ import           Math.Weierstrass     ( halfPeriods,
                                         weierstrassP,
                                         weierstrassPdash,
                                         weierstrassPinv,
-                                        weierstrassSigma )
+                                        weierstrassSigma,
+                                        weierstrassZeta )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -131,6 +132,13 @@ main = defaultMain $
     testCase "a value of weierstrassSigma" $ do
       let expected = 1.8646253716 :+ (-0.3066001355)
           obtained = weierstrassSigma 2 1 (2 * i_)
-      assertApproxEqual "" 10 expected obtained
+      assertApproxEqual "" 10 expected obtained,
+
+    testCase "a value of weierstrassZeta" $ do
+      let g2 = 5 :+ 3
+          g3 = 5 :+ 3
+          expected = 0.802084165492408 :+ (-0.381791358666872)
+          obtained = weierstrassZeta (1 :+ 1) g2 g3
+      assertApproxEqual "" 13 expected obtained
 
   ]

@@ -4,7 +4,8 @@ module Math.Weierstrass
       weierstrassP,
       weierstrassPdash,
       weierstrassPinv,
-      weierstrassSigma
+      weierstrassSigma,
+      weierstrassZeta
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
@@ -170,3 +171,21 @@ weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
     j1 = jtheta1 z1 q
     j1dash = jtheta1Dash 0 q
     h = - pi / (6 * w1) * jtheta1DashDashDash0 tau / j1dash
+
+-- | Weierstrass zeta function
+weierstrassZeta ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassZeta z g2 g3 = - eta1 * z + p * lj1dash
+  where
+    (omega1, omega2) = halfPeriods g2 g3
+    tau = omega2 / omega1
+    q = exp (i_ * pi * tau)
+    w1 = - omega1 / pi
+    p = 0.5 / w1
+    j1dash = jtheta1Dash 0 q
+    eta1 = p * jtheta1DashDashDash0 tau / (6 * w1 * j1dash)
+    pz = p * z
+    lj1dash = jtheta1Dash pz q / jtheta1 pz q
