@@ -1,12 +1,17 @@
 module Math.Weierstrass
     ( halfPeriods,
       ellipticInvariants,
-      weierstrassP
+      weierstrassP,
+      weierstrassPdash
     ) where
 import           Data.Complex     ( Complex(..) )
 import           Internal         ( (%^%) )
 import           Math.Eisenstein  ( eisensteinE4, eisensteinE6, kleinJinv) 
-import           Math.JacobiTheta ( jtheta2, jtheta3, jtheta1, jtheta4 )
+import           Math.JacobiTheta ( jtheta2, 
+                                    jtheta3, 
+                                    jtheta1, 
+                                    jtheta4,
+                                    jtheta1Dash )
 import           Math.Gamma       ( gamma )
 
 
@@ -14,7 +19,7 @@ i_ :: Complex Double
 i_ = 0.0 :+ 1.0
 
 eisensteinG4 :: Complex Double -> Complex Double
-eisensteinG4 tau = pi * pi * pi * pi / 45 * eisensteinE4 tau
+eisensteinG4 tau = pi %^% 4 / 45 * eisensteinE4 tau
 
 eisensteinG6_over_eisensteinG4 :: Complex Double -> Complex Double
 eisensteinG6_over_eisensteinG4 tau = 
@@ -105,4 +110,28 @@ weierstrassP ::
 weierstrassP z g2 g3 = weierstrassP_from_omega z omega1 omega2
   where
     (omega1, omega2) = halfPeriods g2 g3
+
+-- | Derivative of Weierstrass p-function
+weierstrassPdash ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
+  where
+    (omega1, omega2) = halfPeriods g2 g3
+    w1 = 2 * omega1 / pi
+    tau = omega2 / omega1
+    q = exp (i_ * pi * tau)
+    z' = z / w1 
+    j1 = jtheta1 z' q
+    j2 = jtheta2 z' q
+    j3 = jtheta3 z' q
+    j4 = jtheta4 z' q
+    j1dash = jtheta1Dash 0 q
+    j2zero = jtheta2 0 q
+    j3zero = jtheta3 0 q
+    j4zero = jtheta4 0 q
+    f = j1dash %^% 3 / (j1 %^% 3 * j2zero * j3zero * j4zero)
+
 

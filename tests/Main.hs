@@ -11,7 +11,8 @@ import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
 import           Math.Weierstrass     ( halfPeriods, 
                                         ellipticInvariants,
-                                        weierstrassP )
+                                        weierstrassP,
+                                        weierstrassPdash )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -94,6 +95,16 @@ main = defaultMain $
           z0 = omega2 * (1 :+ (1 / sqrt 3))
           obtained = weierstrassP z0 0 1
           expected = 0
-      assertApproxEqual "" 13 obtained expected
+      assertApproxEqual "" 13 obtained expected,
+
+    testCase "Differential equation" $ do
+      let z = 1 :+ 1
+          g2 = 2 :+ 1
+          g3 = 2 :+ (-1)
+          w = weierstrassP z g2 g3
+          wdash = weierstrassPdash z g2 g3
+          left = wdash ** 2
+          right = 4 * w ** 3 - g2 * w - g3
+      assertApproxEqual "" 11 left right
 
   ]
