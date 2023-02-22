@@ -1,6 +1,7 @@
 module Math.Weierstrass
     ( halfPeriods,
-      ellipticInvariants
+      ellipticInvariants,
+      weierstrassP
     ) where
 import           Data.Complex     ( Complex(..) )
 import           Internal         ( (%^%) )
@@ -67,8 +68,8 @@ g_from_omega1_and_tau omega1 tau = (g2, g3)
     j3pow8  = j3pow4 * j3pow4
     j3pow12 = j3pow4 * j3pow8
     g2 = 4/3 * (pi / 2 / omega1) %^% 4 * (j2pow8 - j2pow4 * j3pow4 + j3pow8)
-    g3 = 8/27 * (pi / 2 / omega1) %^% 6 
-      * (j2pow12 - ((1.5 * j2pow8 * j3pow4) + (1.5 * j2pow4 * j3pow8)) + j3pow12)
+    g3 = 8/27 * (pi / 2 / omega1) %^% 6 *
+      (j2pow12 - ((1.5 * j2pow8 * j3pow4) + (1.5 * j2pow4 * j3pow8)) + j3pow12)
 
 -- | Elliptic invariants from half-periods.
 ellipticInvariants :: 
@@ -77,7 +78,6 @@ ellipticInvariants ::
  -> (Complex Double, Complex Double) -- ^ g2, g3
 ellipticInvariants omega1 omega2 = 
   g_from_omega1_and_tau omega1 (omega2 / omega1)
-
 
 weierstrassP_from_tau :: Complex Double -> Complex Double -> Complex Double
 weierstrassP_from_tau z tau = 
@@ -88,4 +88,19 @@ weierstrassP_from_tau z tau =
     j3 = jtheta3 0 q
     j1 = jtheta1 z q
     j4 = jtheta4 z q
+
+weierstrassP_from_omega :: 
+  Complex Double -> Complex Double -> Complex Double -> Complex Double
+weierstrassP_from_omega z omega1 omega2 = 
+  weierstrassP_from_tau (z/omega1/2) (omega2/omega1) / (4 * omega1 * omega1)
+
+-- | Weierstrass p-function
+weierstrassP ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassP z g2 g3 = weierstrassP_from_omega z omega1 omega2
+  where
+    (omega1, omega2) = halfPeriods g2 g3
 
