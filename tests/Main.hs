@@ -70,14 +70,14 @@ main = defaultMain $
       let g2 = (-7) :+ 9
           g3 = 5 :+ 3
           (omega1, omega2) = halfPeriods g2 g3
-          (g2', g3') = ellipticInvariants omega1 omega2
+          (g2', _) = ellipticInvariants omega1 omega2
       assertApproxEqual "" 10 g2 g2',
 
     testCase "Elliptic invariants - 2/2" $ do
       let g2 = (-7) :+ 9
           g3 = 5 :+ 3
           (omega1, omega2) = halfPeriods g2 g3
-          (g2', g3') = ellipticInvariants omega1 omega2
+          (_, g3') = ellipticInvariants omega1 omega2
       assertApproxEqual "" 10 g3 g3'
 
   ]
