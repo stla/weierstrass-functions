@@ -10,6 +10,7 @@ import           Math.Eisenstein
 import           Math.Gamma           ( gamma )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
+import           Math.Weierstrass     ( halfPeriods, ellipticInvariants )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -63,6 +64,20 @@ main = defaultMain $
     testCase "kleinJ o kleinJinv = id" $ do
       let expected =  0.2 :+ 0.2
           obtained = kleinJ (kleinJinv (0.2 :+ 0.2))
-      assertApproxEqual "" 12 expected obtained
+      assertApproxEqual "" 12 expected obtained,
+
+    testCase "Elliptic invariants - 1/2" $ do
+      let g2 = (-7) :+ 9
+          g3 = 5 :+ 3
+          (omega1, omega2) = halfPeriods g2 g3
+          (g2', g3') = ellipticInvariants omega1 omega2
+      assertApproxEqual "" 10 g2 g2',
+
+    testCase "Elliptic invariants - 2/2" $ do
+      let g2 = (-7) :+ 9
+          g3 = 5 :+ 3
+          (omega1, omega2) = halfPeriods g2 g3
+          (g2', g3') = ellipticInvariants omega1 omega2
+      assertApproxEqual "" 10 g3 g3'
 
   ]
