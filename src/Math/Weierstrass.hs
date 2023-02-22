@@ -3,11 +3,15 @@ module Math.Weierstrass
       ellipticInvariants,
       weierstrassP,
       weierstrassPdash,
-      weierstrassPinv
+      weierstrassPinv,
+      weierstrassSigma
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
-import           Math.Eisenstein        ( eisensteinE4, eisensteinE6, kleinJinv) 
+import           Math.Eisenstein        ( eisensteinE4, 
+                                          eisensteinE6, 
+                                          kleinJinv, 
+                                          jtheta1DashDashDash0 ) 
 import           Math.JacobiTheta       ( jtheta2, 
                                           jtheta3, 
                                           jtheta1, 
@@ -150,3 +154,19 @@ weierstrassPinv w g2 g3 = carlsonRF' 1e-14 (w - e1) (w - e2) (w - e3)
     e2 = weierstrassP omega2 g2 g3
     e3 = weierstrassP (-omega1 - omega2) g2 g3
 
+-- | Weierstrass sigma function
+weierstrassSigma ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassSigma z g2 g3 = w1 * exp (h * z * z / w1 / pi) * j1 / j1dash
+  where
+    (omega1, omega2) = halfPeriods g2 g3
+    tau = omega2 / omega1
+    q = exp (i_ * pi * tau)
+    w1 = -2 * omega1
+    z1 = z / w1
+    j1 = jtheta1 (pi * z1) q
+    j1dash = jtheta1Dash 0 q
+    h = pi * pi / (6 * w1) * jtheta1DashDashDash0 tau
