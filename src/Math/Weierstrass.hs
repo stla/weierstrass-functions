@@ -3,8 +3,9 @@ module Math.Weierstrass
       ellipticInvariants
     ) where
 import           Data.Complex     ( Complex(..) )
+import           Internal         ( (%^%) )
 import           Math.Eisenstein  ( eisensteinE4, eisensteinE6, kleinJinv) 
-import           Math.JacobiTheta ( jtheta2, jtheta3 )
+import           Math.JacobiTheta ( jtheta2, jtheta3, jtheta1, jtheta4 )
 import           Math.Gamma       ( gamma )
 
 
@@ -25,7 +26,7 @@ omega1_and_tau g2 g3 = (omega1, tau)
     (omega1, tau) 
       | g2 == 0 = 
         (
-          gamma (1/3) ** 3 / (4 * pi * g3 ** (1/6)),
+          gamma (1/3) %^% 3 / (4 * pi * g3 ** (1/6)),
           0.5 :+ (sqrt 3 / 2)
         )
       | g3 == 0 = 
@@ -59,14 +60,14 @@ g_from_omega1_and_tau omega1 tau = (g2, g3)
     q = exp (i_ *pi * tau)
     j2 = jtheta2 0 q
     j3 = jtheta3 0 q
-    j2pow4  = j2 ** 4
+    j2pow4  = j2 %^% 4
     j2pow8  = j2pow4 * j2pow4
     j2pow12 = j2pow4 * j2pow8
-    j3pow4  = j3 ** 4
+    j3pow4  = j3 %^% 4
     j3pow8  = j3pow4 * j3pow4
     j3pow12 = j3pow4 * j3pow8
-    g2 = 4/3 * (pi / 2 / omega1)**4 * (j2pow8 - j2pow4 * j3pow4 + j3pow8)
-    g3 = 8/27 * (pi / 2 / omega1)**6 
+    g2 = 4/3 * (pi / 2 / omega1) %^% 4 * (j2pow8 - j2pow4 * j3pow4 + j3pow8)
+    g3 = 8/27 * (pi / 2 / omega1) %^% 6 
       * (j2pow12 - ((1.5 * j2pow8 * j3pow4) + (1.5 * j2pow4 * j3pow8)) + j3pow12)
 
 -- | Elliptic invariants from half-periods.
@@ -76,3 +77,15 @@ ellipticInvariants ::
  -> (Complex Double, Complex Double) -- ^ g2, g3
 ellipticInvariants omega1 omega2 = 
   g_from_omega1_and_tau omega1 (omega2 / omega1)
+
+
+weierstrassP_from_tau :: Complex Double -> Complex Double -> Complex Double
+weierstrassP_from_tau z tau = 
+  (pi * j2 * j3 * j4 / j1) %^% 2 - pi*pi * (j2 %^% 4 + j3 %^% 4) / 3
+  where
+    q = exp (i_ *pi * tau)
+    j2 = jtheta2 0 q
+    j3 = jtheta3 0 q
+    j1 = jtheta1 z q
+    j4 = jtheta4 z q
+

@@ -7,6 +7,7 @@ module Math.Eisenstein
       agm
     ) where
 import           Data.Complex           ( Complex(..) )
+import           Internal               ( (%^%) )
 import           Math.EllipticIntegrals ( ellipticF' )
 import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4 )
 
@@ -19,7 +20,7 @@ eisensteinE4 ::
     Complex Double -- ^ tau
  -> Complex Double
 eisensteinE4 tau = 
-  (jtheta2 0 q ** 8 + jtheta3 0 q ** 8 + jtheta4 0 q ** 8) / 2 
+  (jtheta2 0 q %^% 8 + jtheta3 0 q %^% 8 + jtheta4 0 q %^% 8) / 2 
     where
       q = exp (i_ * pi * tau)
 
@@ -28,8 +29,8 @@ eisensteinE6 ::
     Complex Double -- ^ tau
  -> Complex Double
 eisensteinE6 tau = 
-  (jtheta3 0 q ** 12 + jtheta4 0 q ** 12 - 3 * jtheta2 0 q ** 8 
-    * (jtheta3 0 q ** 4 + jtheta4 0 q ** 4)) / 2
+  (jtheta3 0 q %^% 12 + jtheta4 0 q %^% 12 - 3 * jtheta2 0 q %^% 8 
+    * (jtheta3 0 q %^% 4 + jtheta4 0 q %^% 4)) / 2
     where
       q = exp (i_ * pi * tau)
 
@@ -38,14 +39,14 @@ modularDiscriminant ::
     Complex Double -- ^ tau
  -> Complex Double
 modularDiscriminant tau = 
-  (eisensteinE4 tau ** 3 - eisensteinE6 tau ** 2) / 1728
+  (eisensteinE4 tau %^% 3 - eisensteinE6 tau %^% 2) / 1728
 
 -- | Klein J-function
 kleinJ :: 
     Complex Double -- ^ tau
  -> Complex Double
 kleinJ tau = 
-  eisensteinE4 tau ** 3 / modularDiscriminant tau
+  eisensteinE4 tau %^% 3 / modularDiscriminant tau
 
 -- | Arithmetic-geometric mean
 agm :: 
@@ -55,7 +56,7 @@ agm ::
 agm x y = 
   if x == 0 || y == 0 || x + y == 0
     then 0
-    else pi/4 * (x + y) / ellipticF' 1e-15 (pi/2) (((x-y)/(x+y))**2)
+    else pi/4 * (x + y) / ellipticF' 1e-15 (pi/2) (((x - y) / (x + y)) %^% 2)
 
 -- | Inverse Klein-J function
 kleinJinv :: 

@@ -18,6 +18,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Math.Eisenstein
                      , Math.Weierstrass
+  other-modules:       Internal
   build-depends:       base >= 4.7 && < 5
                      , jacobi-theta >= 0.1.0.0
                      , elliptic-integrals >= 0.1.0.0
