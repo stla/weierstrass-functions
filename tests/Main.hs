@@ -5,7 +5,8 @@ import           Math.Eisenstein      ( eisensteinE4,
                                         eisensteinE6,
                                         kleinJ,
                                         agm,
-                                        kleinJinv )
+                                        kleinJinv, 
+                                        etaDedekind )
 import           Math.Gamma           ( gamma )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
@@ -112,6 +113,11 @@ main = defaultMain $
           z = weierstrassPinv w g2 g3
           obtained = weierstrassP z g2 g3
           expected = w
-      assertApproxEqual "" 13 expected obtained
+      assertApproxEqual "" 13 expected obtained,
+
+    testCase "a value of Dedekind eta" $ do
+      let expected = gamma 0.25 / 2 ** (11/8) / pi ** 0.75
+          obtained = etaDedekind (2 * i_)
+      assertApproxEqual "" 14 expected obtained
 
   ]

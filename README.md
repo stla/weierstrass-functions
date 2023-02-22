@@ -5,4 +5,4 @@
 [![Stack-nightly](https://github.com/stla/weierstrass-functions/actions/workflows/Stack-nightly.yml/badge.svg)](https://github.com/stla/weierstrass-functions/actions/workflows/Stack-nightly.yml)
 <!-- badges: end -->
 
-Evaluation of the Weierstrass elliptic functions.
+Evaluation of the Weierstrass elliptic functions and some related functions.

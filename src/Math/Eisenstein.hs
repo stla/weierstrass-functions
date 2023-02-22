@@ -4,7 +4,8 @@ module Math.Eisenstein
       kleinJ,
       kleinJinv,
       modularDiscriminant,
-      agm
+      agm,
+      etaDedekind
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
@@ -73,3 +74,16 @@ kleinJinv j =
     u = t ** (1/3)
     x = 4 + (u - j) / 192 - (1536 * j - j2) / (192 * u)
     lbd = -(-1 - sqrt(1 - x)) / 2
+
+-- | Dedekind eta function
+etaDedekind ::
+    Complex Double -- ^ tau
+ -> Complex Double
+etaDedekind tau = exp (ipitau / 12) * j3
+  where
+    ipitau = i_ * pi * tau
+    q = exp (3 * ipitau)
+    j3 = jtheta3 (pi / 2 * (tau + 1)) q
+
+
+
