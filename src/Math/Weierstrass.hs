@@ -58,7 +58,7 @@ g_from_omega1_and_tau ::
   Complex Double -> Complex Double -> (Complex Double, Complex Double)
 g_from_omega1_and_tau omega1 tau = (g2, g3)
   where
-    q = exp (i_ *pi * tau)
+    q = exp (i_ * pi * tau)
     j2 = jtheta2 0 q
     j3 = jtheta3 0 q
     j2pow4  = j2 %^% 4
@@ -81,18 +81,20 @@ ellipticInvariants omega1 omega2 =
 
 weierstrassP_from_tau :: Complex Double -> Complex Double -> Complex Double
 weierstrassP_from_tau z tau = 
-  (pi * j2 * j3 * j4 / j1) %^% 2 - pi*pi * (j2 %^% 4 + j3 %^% 4) / 3
+  (pi * j2 * j3 * j4 / j1) %^% 2 - pi * pi * (j2 %^% 4 + j3 %^% 4) / 3
   where
-    q = exp (i_ *pi * tau)
+    q = exp (i_ * pi * tau)
     j2 = jtheta2 0 q
     j3 = jtheta3 0 q
-    j1 = jtheta1 z q
-    j4 = jtheta4 z q
+    z' = pi * z
+    j1 = jtheta1 z' q
+    j4 = jtheta4 z' q
 
 weierstrassP_from_omega :: 
   Complex Double -> Complex Double -> Complex Double -> Complex Double
 weierstrassP_from_omega z omega1 omega2 = 
-  weierstrassP_from_tau (z/omega1/2) (omega2/omega1) / (4 * omega1 * omega1)
+  weierstrassP_from_tau 
+    (z / omega1 / 2) (omega2 / omega1) / (4 * omega1 * omega1)
 
 -- | Weierstrass p-function
 weierstrassP ::

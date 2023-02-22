@@ -1,8 +1,7 @@
 module Main where
 import           Approx               ( assertApproxEqual )
 import           Data.Complex         ( Complex(..) )
-import           Math.Eisenstein
-                                      ( eisensteinE4,
+import           Math.Eisenstein      ( eisensteinE4,
                                         eisensteinE6,
                                         kleinJ,
                                         agm,
@@ -10,7 +9,9 @@ import           Math.Eisenstein
 import           Math.Gamma           ( gamma )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
-import           Math.Weierstrass     ( halfPeriods, ellipticInvariants )
+import           Math.Weierstrass     ( halfPeriods, 
+                                        ellipticInvariants,
+                                        weierstrassP )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -71,13 +72,28 @@ main = defaultMain $
           g3 = 5 :+ 3
           (omega1, omega2) = halfPeriods g2 g3
           (g2', _) = ellipticInvariants omega1 omega2
-      assertApproxEqual "" 10 g2 g2',
+      assertApproxEqual "" 12 g2 g2',
 
     testCase "Elliptic invariants - 2/2" $ do
       let g2 = (-7) :+ 9
           g3 = 5 :+ 3
           (omega1, omega2) = halfPeriods g2 g3
           (_, g3') = ellipticInvariants omega1 omega2
-      assertApproxEqual "" 10 g3 g3'
+      assertApproxEqual "" 12 g3 g3',
+
+    testCase "a value of weierstrassP" $ do
+      let z = 0.1 :+ 0.1
+          g2 = 2 :+ 1
+          g3 = 2 :+ (-1)
+          obtained = weierstrassP z g2 g3
+          expected = (-0.0010285443715) :+ (-49.9979857342848)
+      assertApproxEqual "" 11 expected obtained,
+
+    testCase "Equianharmonic case" $ do
+      let omega2 = gamma (1/3) ** 3 / 4 / pi
+          z0 = omega2 * (1 :+ (1 / sqrt 3))
+          obtained = weierstrassP z0 0 1
+          expected = 0
+      assertApproxEqual "" 13 obtained expected
 
   ]
