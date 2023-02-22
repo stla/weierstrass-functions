@@ -6,7 +6,8 @@ import           Math.Eisenstein      ( eisensteinE4,
                                         kleinJ,
                                         agm,
                                         kleinJinv, 
-                                        etaDedekind )
+                                        etaDedekind,
+                                        lambda )
 import           Math.Gamma           ( gamma )
 import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
@@ -118,6 +119,12 @@ main = defaultMain $
     testCase "a value of Dedekind eta" $ do
       let expected = gamma 0.25 / 2 ** (11/8) / pi ** 0.75
           obtained = etaDedekind (2 * i_)
+      assertApproxEqual "" 14 expected obtained,
+
+    testCase "lambda modular identity" $ do
+      let x = sqrt 2
+          expected = 1
+          obtained = lambda (i_ * x) + lambda (i_ / x)
       assertApproxEqual "" 14 expected obtained
 
   ]

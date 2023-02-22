@@ -18,7 +18,7 @@ import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4 )
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
 
--- | Eisenstein series of weight 2
+-- | Lambda modular function (square of elliptic modulus)
 lambda :: 
     Complex Double -- ^ tau
  -> Complex Double
