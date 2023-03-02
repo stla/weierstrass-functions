@@ -8,12 +8,13 @@ module Math.Eisenstein
       modularDiscriminant,
       agm,
       etaDedekind,
-      jtheta1DashDashDash0
+      jtheta1DashDashDash0,
+      jtheta1Dash
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
 import           Math.EllipticIntegrals ( ellipticF', ellipticE' )
-import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4 )
+import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4, jtheta1Dash )
 
 
 i_ :: Complex Double
@@ -114,6 +115,6 @@ etaDedekind tau = exp (ipitau / 12) * j3
 jtheta1DashDashDash0 :: 
     Complex Double -- ^ tau
  -> Complex Double
-jtheta1DashDashDash0 tau = -2 * etaDedekind tau %^% 3 * eisensteinE2 tau 
+jtheta1DashDashDash0 tau = - jtheta1Dash 0 tau * eisensteinE2 tau 
 
 
