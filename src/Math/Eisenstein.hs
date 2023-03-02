@@ -115,6 +115,8 @@ etaDedekind tau = exp (ipitau / 12) * j3
 jtheta1DashDashDash0 :: 
     Complex Double -- ^ tau
  -> Complex Double
-jtheta1DashDashDash0 tau = - jtheta1Dash 0 tau * eisensteinE2 tau 
+jtheta1DashDashDash0 tau = - jtheta1Dash 0 q * eisensteinE2 tau 
+  where
+    q = exp (i_ * pi * tau)
 
 
