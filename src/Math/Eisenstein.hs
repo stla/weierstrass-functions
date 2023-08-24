@@ -30,6 +30,28 @@ lambda tau = (j2 / j3) %^% 4
       j2 = jtheta2 0 q
       j3 = jtheta3 0 q
 
+
+
+-----
+-- psi :: Complex Double -> Complex Double
+-- psi z = im + 2*im*z / (im - z)
+--   where
+--     im = 0 :+ 1
+
+-- test :: Int -> Int -> Complex Double
+-- test i j = 
+--     let i' = -0.8 + fromIntegral i / 512 * (0.8 + 0.8)
+--         j' = -0.8 + fromIntegral j / 512 * (0.8 + 0.8)
+--         z = i' :+ j' 
+--     in 
+--     if magnitude z > 0.95
+--             then 0
+--             else if j' < 0 
+--                 then (lambda (-1 / psi z)) 
+--                 else (lambda (psi z)) 
+-----
+
+
 -- | Eisenstein series of weight 2
 eisensteinE2 :: 
     Complex Double -- ^ tau
@@ -74,10 +96,10 @@ kleinJ ::
  -> Complex Double
 kleinJ tau = 
   let 
-  lbd = lambda(tau)
+  lbd = lambda tau
   x = lbd * (1 - lbd)
   in
-  256 * (1 - x) %^% 3 / x %^% 2
+  256 * ((1 - x) %^% 3) / (x %^% 2)
   --eisensteinE4 tau %^% 3 / modularDiscriminant tau
 
 -- | Arithmetic-geometric mean

@@ -1,5 +1,5 @@
 name:                weierstrass-functions
-version:             0.1.2.0
+version:             0.1.3.0
 synopsis:            Weierstrass Elliptic Functions
 description:         Evaluation of Weierstrass elliptic functions and some related functions.
 homepage:            https://github.com/stla/weierstrass-functions#readme
