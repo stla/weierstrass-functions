@@ -3,6 +3,7 @@ import           Approx               ( assertApproxEqual )
 import           Data.Complex         ( Complex(..) )
 import           Math.Eisenstein      ( eisensteinE4,
                                         eisensteinE6,
+                                        modularDiscriminant,
                                         kleinJ,
                                         agm,
                                         kleinJinv, 
@@ -30,6 +31,9 @@ tau2 = i_ / 10.0
 
 tau3 :: Complex Double 
 tau3 = 2.0 :+ 2.0
+
+tau4 :: Complex Double 
+tau4 = 0.2 :+ 0.2
 
 main :: IO ()
 main = defaultMain $
@@ -69,6 +73,11 @@ main = defaultMain $
       let expected =  0.2 :+ 0.2
           obtained = kleinJ (kleinJinv (0.2 :+ 0.2))
       assertApproxEqual "" 12 expected obtained,
+
+    testCase "kleinJ - alternative expression" $ do
+      let k = kleinJ tau3
+          k' = (eisensteinE4 tau3)**3 / modularDiscriminant tau3
+      assertApproxEqual "" 4 k k',
 
     testCase "Elliptic invariants - 1/2" $ do
       let g2 = (-7) :+ 9

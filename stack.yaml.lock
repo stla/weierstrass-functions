@@ -5,12 +5,12 @@
 
 packages:
 - completed:
-    hackage: jacobi-theta-0.1.0.0@sha256:32e17e4ad80b4db818510c120af85cd571112b608c1b5ccc75462236aac08e36,1533
+    hackage: jacobi-theta-0.1.2.0@sha256:b868599c1e17bafb8720265fd49f4251061e8c433f900b19bd521015d91851d7,1533
     pantry-tree:
-      sha256: 1a336247149a646189ea90afdcd9281c3cf3801280d4b088c54aeed22ef08efc
-      size: 427
+      sha256: 6f16972c5f020293296c4940f5a59ebff7f1990742bd0a7836525ed6efc01b52
+      size: 429
   original:
-    hackage: jacobi-theta-0.1.0.0
+    hackage: jacobi-theta-0.1.2.0
 - completed:
     hackage: elliptic-integrals-0.1.0.0@sha256:f96e03260c1fc51f8e1a65ef2d4d36600ac36eac5d50c41a444b676791cd9292,1484
     pantry-tree:
@@ -41,7 +41,7 @@ packages:
     hackage: converge-0.1.0.1
 snapshots:
 - completed:
-    sha256: adbc602422dde10cc330175da7de8609e70afc41449a7e2d6e8b1827aa0e5008
-    size: 649342
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/11.yaml
-  original: lts-20.11
+    sha256: 5a59b2a405b3aba3c00188453be172b85893cab8ebc352b1ef58b0eae5d248a2
+    size: 650475
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/26.yaml
+  original: lts-20.26

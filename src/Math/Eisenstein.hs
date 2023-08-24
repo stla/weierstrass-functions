@@ -73,7 +73,12 @@ kleinJ ::
     Complex Double -- ^ tau
  -> Complex Double
 kleinJ tau = 
-  eisensteinE4 tau %^% 3 / modularDiscriminant tau
+  let 
+  lbd = lambda(tau)
+  x = lbd * (1 - lbd)
+  in
+  256 * (1 - x) %^% 3 / x %^% 2
+  --eisensteinE4 tau %^% 3 / modularDiscriminant tau
 
 -- | Arithmetic-geometric mean
 agm :: 
