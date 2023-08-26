@@ -1,5 +1,10 @@
 # Changelog for `weierstrass-functions`
 
+## 0.1.3.1 - 2023-08-26
+
+Changed `kleinJ` to avoid possible float overflows.
+
+
 ## 0.1.3.0 - 2023-08-24
 
 Fixed some mistakes.

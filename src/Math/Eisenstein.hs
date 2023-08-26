@@ -99,7 +99,8 @@ kleinJ tau =
   lbd = lambda tau
   x = lbd * (1 - lbd)
   in
-  256 * ((1 - x) %^% 3) / (x %^% 2)
+  -- 256 * ((1 - x) %^% 3) / (x %^% 2)
+  256 * ((1/x - 1) %^% 2) * (1 - x)
   --eisensteinE4 tau %^% 3 / modularDiscriminant tau
 
 -- | Arithmetic-geometric mean
