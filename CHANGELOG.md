@@ -1,5 +1,10 @@
 # Changelog for `weierstrass-functions`
 
+## 0.1.4.0 - 2023-10-16
+
+Increased the lower bound of the version of the 'jacobi-theta' dependency.
+
+
 ## 0.1.3.1 - 2023-09-12
 
 Changed `kleinJ` to avoid possible float overflows.

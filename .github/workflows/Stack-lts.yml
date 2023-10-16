@@ -15,7 +15,7 @@ jobs:
           - windows-latest
 
         resolver:
-          - lts-21.9  # ghc-9.4.6 
+          - lts-21.16 # ghc-9.4.7 
           - lts-20.26 # ghc-9.2.8
           - lts-19.33 # ghc-9.0
           - lts-18.28 # ghc-8.10
