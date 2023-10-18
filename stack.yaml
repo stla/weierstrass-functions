@@ -4,7 +4,8 @@ packages:
 - .
 
 extra-deps:
-- jacobi-theta-0.2.0.0
+- git: https://github.com/stla/jacobi-theta.git
+  commit: 1ca79c7632ac921720b609a2a1bee7d90b7a02af
 - elliptic-integrals-0.1.0.0
 - gamma-0.10.0.0
 - continued-fractions-0.10.0.2

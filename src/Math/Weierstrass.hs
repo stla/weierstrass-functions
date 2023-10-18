@@ -1,3 +1,12 @@
+{-|
+Module      : Math.Eisenstein
+Description : Some Weierstrass functions.
+Copyright   : (c) Stéphane Laurent, 2023
+License     : BSD3
+Maintainer  : laurent_step@outlook.fr
+
+Provides some Weierstrass functions and related functions.
+-}
 module Math.Weierstrass
     ( halfPeriods,
       ellipticInvariants,
@@ -17,6 +26,7 @@ import           Math.JacobiTheta       ( jtheta2,
                                           jtheta3, 
                                           jtheta1, 
                                           jtheta4,
+                                          jtheta1Dash0,
                                           jtheta1Dash )
 import           Math.Gamma             ( gamma )
 import           Math.EllipticIntegrals ( carlsonRF' )
@@ -136,7 +146,7 @@ weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
     j2 = jtheta2 z' q
     j3 = jtheta3 z' q
     j4 = jtheta4 z' q
-    j1dash = jtheta1Dash 0 q
+    j1dash = jtheta1Dash0 q
     j2zero = jtheta2 0 q
     j3zero = jtheta3 0 q
     j4zero = jtheta4 0 q
@@ -169,7 +179,7 @@ weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
     w1 = -2 * omega1 / pi
     z1 = z / w1
     j1 = jtheta1 z1 q
-    j1dash = jtheta1Dash 0 q
+    j1dash = jtheta1Dash0 q
     h = - pi / (6 * w1) * jtheta1DashDashDash0 tau / j1dash
 
 -- | Weierstrass zeta function
@@ -185,7 +195,7 @@ weierstrassZeta z g2 g3 = - eta1 * z + p * lj1dash
     q = exp (i_ * pi * tau)
     w1 = - omega1 / pi
     p = 0.5 / w1
-    j1dash = jtheta1Dash 0 q
+    j1dash = jtheta1Dash0 q
     eta1 = p * jtheta1DashDashDash0 tau / (6 * w1 * j1dash)
     pz = p * z
     lj1dash = jtheta1Dash pz q / jtheta1 pz q

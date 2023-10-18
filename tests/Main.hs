@@ -110,8 +110,8 @@ main = defaultMain $
 
     testCase "Differential equation" $ do
       let z = 1 :+ 1
-          g2 = 2 :+ 1
-          g3 = 2 :+ (-1)
+          g2 = 5 :+ 3
+          g3 = 2 :+ 7
           w = weierstrassP z g2 g3
           wdash = weierstrassPdash z g2 g3
           left = wdash ** 2

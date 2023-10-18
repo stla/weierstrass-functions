@@ -1,5 +1,5 @@
 name:                weierstrass-functions
-version:             0.1.4.0
+version:             0.1.5.0
 synopsis:            Weierstrass Elliptic Functions
 description:         Evaluation of Weierstrass elliptic functions and some related functions.
 homepage:            https://github.com/stla/weierstrass-functions#readme
@@ -20,7 +20,7 @@ library
                      , Math.Weierstrass
   other-modules:       Internal
   build-depends:       base >= 4.7 && < 5
-                     , jacobi-theta >= 0.2.0.0
+                     , jacobi-theta >= 0.2.1.1
                      , elliptic-integrals >= 0.1.0.0
                      , gamma >= 0.10.0.0
   default-language:    Haskell2010
