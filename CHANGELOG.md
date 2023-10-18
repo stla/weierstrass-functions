@@ -2,7 +2,8 @@
 
 ## 0.1.5.0 - 2023-10-18
 
-Increased the lower bound of the version of the 'jacobi-theta' dependency.
+Increased the lower bound of the version of the 'jacobi-theta' dependency, 
+in order to use the new function `jtheta1Dash0`.
 
 
 ## 0.1.4.0 - 2023-10-16
