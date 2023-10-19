@@ -1,10 +1,11 @@
-resolver: lts-20.26
+resolver: lts-21.16
 
 packages:
 - .
 
 extra-deps:
-- jacobi-theta-0.2.1.1
+- git: https://github.com/stla/jacobi-theta.git
+  commit: bec442d433a2c7ce39229e6a89232779d32db596
 - elliptic-integrals-0.1.0.0
 - gamma-0.10.0.0
 - continued-fractions-0.10.0.2

@@ -5,15 +5,15 @@
 
 packages:
 - completed:
-    commit: 1ca79c7632ac921720b609a2a1bee7d90b7a02af
+    commit: bec442d433a2c7ce39229e6a89232779d32db596
     git: https://github.com/stla/jacobi-theta.git
     name: jacobi-theta
     pantry-tree:
-      sha256: 9488726294512da43ee1498cfc9bd57ced5d41261334467b1f52ba3d059dc793
+      sha256: e46e4f146390f11c45aefb0b815e0c4b2b94067e684115ecf27e39abaec6a9b0
       size: 772
-    version: 0.2.1.1
+    version: 0.2.2.0
   original:
-    commit: 1ca79c7632ac921720b609a2a1bee7d90b7a02af
+    commit: bec442d433a2c7ce39229e6a89232779d32db596
     git: https://github.com/stla/jacobi-theta.git
 - completed:
     hackage: elliptic-integrals-0.1.0.0@sha256:f96e03260c1fc51f8e1a65ef2d4d36600ac36eac5d50c41a444b676791cd9292,1484
@@ -45,7 +45,7 @@ packages:
     hackage: converge-0.1.0.1
 snapshots:
 - completed:
-    sha256: 5a59b2a405b3aba3c00188453be172b85893cab8ebc352b1ef58b0eae5d248a2
-    size: 650475
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/20/26.yaml
-  original: lts-20.26
+    sha256: 1d663bec402f77fa09fa3e8cf288c3c7eb18a1f28a5e0c331ac47adeacd21346
+    size: 640034
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/16.yaml
+  original: lts-21.16

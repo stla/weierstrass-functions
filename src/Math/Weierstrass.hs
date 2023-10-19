@@ -22,10 +22,10 @@ import           Math.Eisenstein        ( eisensteinE4,
                                           eisensteinE6, 
                                           kleinJinv, 
                                           jtheta1DashDashDash0 ) 
-import           Math.JacobiTheta       ( jtheta2, 
-                                          jtheta3, 
-                                          jtheta1, 
-                                          jtheta4,
+import           Math.JacobiTheta       ( jtheta1', 
+                                          jtheta2', 
+                                          jtheta3', 
+                                          jtheta4',
                                           jtheta1Dash0,
                                           jtheta1Dash )
 import           Math.Gamma             ( gamma )
@@ -81,9 +81,8 @@ g_from_omega1_and_tau ::
   Complex Double -> Complex Double -> (Complex Double, Complex Double)
 g_from_omega1_and_tau omega1 tau = (g2, g3)
   where
-    q = exp (i_ * pi * tau)
-    j2 = jtheta2 0 q
-    j3 = jtheta3 0 q
+    j2 = jtheta2' 0 tau
+    j3 = jtheta3' 0 tau
     j2pow4  = j2 %^% 4
     j2pow8  = j2pow4 * j2pow4
     j2pow12 = j2pow4 * j2pow8
@@ -106,12 +105,11 @@ weierstrassP_from_tau :: Complex Double -> Complex Double -> Complex Double
 weierstrassP_from_tau z tau = 
   (pi * j2 * j3 * j4 / j1) %^% 2 - pi * pi * (j2 %^% 4 + j3 %^% 4) / 3
   where
-    q = exp (i_ * pi * tau)
-    j2 = jtheta2 0 q
-    j3 = jtheta3 0 q
+    j2 = jtheta2' 0 tau
+    j3 = jtheta3' 0 tau
     z' = pi * z
-    j1 = jtheta1 z' q
-    j4 = jtheta4 z' q
+    j1 = jtheta1' z' tau
+    j4 = jtheta4' z' tau
 
 weierstrassP_from_omega :: 
   Complex Double -> Complex Double -> Complex Double -> Complex Double
@@ -142,14 +140,14 @@ weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
     tau = omega2 / omega1
     q = exp (i_ * pi * tau)
     z' = z / w1 
-    j1 = jtheta1 z' q
-    j2 = jtheta2 z' q
-    j3 = jtheta3 z' q
-    j4 = jtheta4 z' q
+    j1 = jtheta1' z' tau
+    j2 = jtheta2' z' tau
+    j3 = jtheta3' z' tau
+    j4 = jtheta4' z' tau
     j1dash = jtheta1Dash0 q
-    j2zero = jtheta2 0 q
-    j3zero = jtheta3 0 q
-    j4zero = jtheta4 0 q
+    j2zero = jtheta2' 0 tau
+    j3zero = jtheta3' 0 tau
+    j4zero = jtheta4' 0 tau
     f = j1dash %^% 3 / (j1 %^% 3 * j2zero * j3zero * j4zero)
 
 -- | Inverse of Weierstrass p-function
@@ -178,7 +176,7 @@ weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
     q = exp (i_ * pi * tau)
     w1 = -2 * omega1 / pi
     z1 = z / w1
-    j1 = jtheta1 z1 q
+    j1 = jtheta1' z1 tau
     j1dash = jtheta1Dash0 q
     h = - pi / (6 * w1) * jtheta1DashDashDash0 tau / j1dash
 
@@ -198,4 +196,4 @@ weierstrassZeta z g2 g3 = - eta1 * z + p * lj1dash
     j1dash = jtheta1Dash0 q
     eta1 = p * jtheta1DashDashDash0 tau / (6 * w1 * j1dash)
     pz = p * z
-    lj1dash = jtheta1Dash pz q / jtheta1 pz q
+    lj1dash = jtheta1Dash pz q / jtheta1' pz tau

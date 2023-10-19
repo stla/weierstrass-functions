@@ -22,7 +22,7 @@ module Math.Eisenstein
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
 import           Math.EllipticIntegrals ( ellipticF', ellipticE' )
-import           Math.JacobiTheta       ( jtheta2, jtheta3, jtheta4, jtheta1Dash0 )
+import           Math.JacobiTheta       ( jtheta2', jtheta3', jtheta4', jtheta1Dash0 )
 
 
 i_ :: Complex Double
@@ -34,9 +34,8 @@ lambda ::
  -> Complex Double
 lambda tau = (j2 / j3) %^% 4
     where
-      q = exp (i_ * pi * tau)
-      j2 = jtheta2 0 q
-      j3 = jtheta3 0 q
+      j2 = jtheta2' 0 tau
+      j3 = jtheta3' 0 tau
 
 
 
@@ -67,9 +66,8 @@ eisensteinE2 ::
 eisensteinE2 tau = 
   6 / pi * ellE * j3 - j3 * j3 - j4
     where
-      q = exp (i_ * pi * tau)
-      j3 = jtheta3 0 q %^% 2
-      j4 = jtheta4 0 q %^% 4
+      j3 = jtheta3' 0 tau %^% 2
+      j4 = jtheta4' 0 tau %^% 4
       ellE = ellipticE' 1e-14 (pi/2) (lambda tau)
 
 -- | Eisenstein series of weight 4
@@ -77,19 +75,15 @@ eisensteinE4 ::
     Complex Double -- ^ tau
  -> Complex Double
 eisensteinE4 tau = 
-  (jtheta2 0 q %^% 8 + jtheta3 0 q %^% 8 + jtheta4 0 q %^% 8) / 2 
-    where
-      q = exp (i_ * pi * tau)
+  (jtheta2' 0 tau %^% 8 + jtheta3' 0 tau %^% 8 + jtheta4' 0 tau %^% 8) / 2 
 
 -- | Eisenstein series of weight 6
 eisensteinE6 :: 
     Complex Double -- ^ tau
  -> Complex Double
 eisensteinE6 tau = 
-  (jtheta3 0 q %^% 12 + jtheta4 0 q %^% 12 - 3 * jtheta2 0 q %^% 8 
-    * (jtheta3 0 q %^% 4 + jtheta4 0 q %^% 4)) / 2
-    where
-      q = exp (i_ * pi * tau)
+  (jtheta3' 0 tau %^% 12 + jtheta4' 0 tau %^% 12 - 3 * jtheta2' 0 tau %^% 8 
+    * (jtheta3' 0 tau %^% 4 + jtheta4' 0 tau %^% 4)) / 2
 
 -- | Modular discriminant
 modularDiscriminant ::
@@ -144,8 +138,7 @@ etaDedekind ::
 etaDedekind tau = exp (ipitau / 12) * j3
   where
     ipitau = i_ * pi * tau
-    q = exp (3 * ipitau)
-    j3 = jtheta3 (pi / 2 * (tau + 1)) q
+    j3 = jtheta3' (pi / 2 * (tau + 1)) (3 * tau)
 
 -- | Third derivative at 0 of the first Jacobi theta function
 jtheta1DashDashDash0 :: 

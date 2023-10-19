@@ -1,5 +1,10 @@
 # Changelog for `weierstrass-functions`
 
+## 0.1.6.0 - 2023-10-19
+
+Increased the lower bound of the version of the 'jacobi-theta' dependency.
+
+
 ## 0.1.5.0 - 2023-10-18
 
 Increased the lower bound of the version of the 'jacobi-theta' dependency, 
