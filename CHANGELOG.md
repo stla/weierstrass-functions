@@ -2,7 +2,11 @@
 
 ## 0.1.6.0 - 2023-10-19
 
-Increased the lower bound of the version of the 'jacobi-theta' dependency.
+- Increased the lower bound of the version of the 'jacobi-theta' dependency.
+
+- Now the Weierstrass functions are defined from the half-periods rather than 
+from the elliptic invariants. Each of them has a "prime" version defined from 
+the elliptic invariants: `weierstrassP` and `weierstrassP'`, etc.
 
 
 ## 0.1.5.0 - 2023-10-18

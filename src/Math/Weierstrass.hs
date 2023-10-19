@@ -11,10 +11,15 @@ module Math.Weierstrass
     ( halfPeriods,
       ellipticInvariants,
       weierstrassP,
+      weierstrassP',
       weierstrassPdash,
+      weierstrassPdash',
       weierstrassPinv,
+      weierstrassPinv',
       weierstrassSigma,
-      weierstrassZeta
+      weierstrassSigma',
+      weierstrassZeta,
+      weierstrassZeta'
     ) where
 import           Data.Complex           ( Complex(..) )
 import           Internal               ( (%^%) )
@@ -111,31 +116,34 @@ weierstrassP_from_tau z tau =
     j1 = jtheta1' z' tau
     j4 = jtheta4' z' tau
 
-weierstrassP_from_omega :: 
-  Complex Double -> Complex Double -> Complex Double -> Complex Double
-weierstrassP_from_omega z omega1 omega2 = 
+-- | Weierstrass p-function given the half-periods
+weierstrassP ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ half-period omega1
+ -> Complex Double -- ^ half-period omega2
+ -> Complex Double
+weierstrassP z omega1 omega2 = 
   weierstrassP_from_tau 
     (z / omega1 / 2) (omega2 / omega1) / (4 * omega1 * omega1)
 
--- | Weierstrass p-function
-weierstrassP ::
+-- | Weierstrass p-function given the elliptic invariants
+weierstrassP' ::
     Complex Double -- ^ z
  -> Complex Double -- ^ elliptic invariant g2
  -> Complex Double -- ^ elliptic invariant g3
  -> Complex Double
-weierstrassP z g2 g3 = weierstrassP_from_omega z omega1 omega2
+weierstrassP' z g2 g3 = weierstrassP z omega1 omega2
   where
     (omega1, omega2) = halfPeriods g2 g3
 
--- | Derivative of Weierstrass p-function
+-- | Derivative of Weierstrass p-function given the half-periods
 weierstrassPdash ::
     Complex Double -- ^ z
- -> Complex Double -- ^ elliptic invariant g2
- -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double -- ^ half-period omega1
+ -> Complex Double -- ^ half-period omega2
  -> Complex Double
-weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
+weierstrassPdash z omega1 omega2 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
   where
-    (omega1, omega2) = halfPeriods g2 g3
     w1 = 2 * omega1 / pi
     tau = omega2 / omega1
     q = exp (i_ * pi * tau)
@@ -150,28 +158,46 @@ weierstrassPdash z g2 g3 = 2 / (w1 %^% 3) * j2 * j3 * j4 * f
     j4zero = jtheta4' 0 tau
     f = j1dash %^% 3 / (j1 %^% 3 * j2zero * j3zero * j4zero)
 
--- | Inverse of Weierstrass p-function
-weierstrassPinv ::
-    Complex Double -- ^ w
- -> Complex Double -- ^ elliptic invariant g2
- -> Complex Double -- ^ elliptic invariant g3
- -> Complex Double
-weierstrassPinv w g2 g3 = carlsonRF' 1e-14 (w - e1) (w - e2) (w - e3)
-  where
-    (omega1, omega2) = halfPeriods g2 g3
-    e1 = weierstrassP omega1 g2 g3
-    e2 = weierstrassP omega2 g2 g3
-    e3 = weierstrassP (-omega1 - omega2) g2 g3
-
--- | Weierstrass sigma function
-weierstrassSigma ::
+-- | Derivative of Weierstrass p-function given the elliptic invariants
+weierstrassPdash' ::
     Complex Double -- ^ z
  -> Complex Double -- ^ elliptic invariant g2
  -> Complex Double -- ^ elliptic invariant g3
  -> Complex Double
-weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
+weierstrassPdash' z g2 g3 = weierstrassPdash z omega1 omega2
   where
     (omega1, omega2) = halfPeriods g2 g3
+
+-- | Inverse of Weierstrass p-function given the half-periods
+weierstrassPinv ::
+    Complex Double -- ^ w
+ -> Complex Double -- ^ half-period omega1
+ -> Complex Double -- ^ half-period omega2
+ -> Complex Double
+weierstrassPinv w omega1 omega2 = carlsonRF' 1e-14 (w - e1) (w - e2) (w - e3)
+  where
+    e1 = weierstrassP omega1 omega1 omega2
+    e2 = weierstrassP omega2 omega1 omega2
+    e3 = weierstrassP (-omega1 - omega2) omega1 omega2
+
+-- | Inverse of Weierstrass p-function given the elliptic invariants
+weierstrassPinv' ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassPinv' z g2 g3 = weierstrassPinv z omega1 omega2
+  where
+    (omega1, omega2) = halfPeriods g2 g3
+
+-- | Weierstrass sigma function given the half-periods
+weierstrassSigma ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ half-period omega1
+ -> Complex Double -- ^ half-period omega2
+ -> Complex Double
+weierstrassSigma z omega1 omega2 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
+  where
     tau = omega2 / omega1
     q = exp (i_ * pi * tau)
     w1 = -2 * omega1 / pi
@@ -180,15 +206,24 @@ weierstrassSigma z g2 g3 = w1 * exp (h * z * z1 / pi) * j1 / j1dash
     j1dash = jtheta1Dash0 q
     h = - pi / (6 * w1) * jtheta1DashDashDash0 tau / j1dash
 
--- | Weierstrass zeta function
-weierstrassZeta ::
+-- | Weierstrass sigma function given the elliptic invariants
+weierstrassSigma' ::
     Complex Double -- ^ z
  -> Complex Double -- ^ elliptic invariant g2
  -> Complex Double -- ^ elliptic invariant g3
  -> Complex Double
-weierstrassZeta z g2 g3 = - eta1 * z + p * lj1dash
+weierstrassSigma' z g2 g3 = weierstrassSigma z omega1 omega2
   where
     (omega1, omega2) = halfPeriods g2 g3
+
+-- | Weierstrass zeta function given the half-periods
+weierstrassZeta ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ half-period omega1
+ -> Complex Double -- ^ half-period omega2
+ -> Complex Double
+weierstrassZeta z omega1 omega2 = - eta1 * z + p * lj1dash
+  where
     tau = omega2 / omega1
     q = exp (i_ * pi * tau)
     w1 = - omega1 / pi
@@ -197,3 +232,13 @@ weierstrassZeta z g2 g3 = - eta1 * z + p * lj1dash
     eta1 = p * jtheta1DashDashDash0 tau / (6 * w1 * j1dash)
     pz = p * z
     lj1dash = jtheta1Dash pz q / jtheta1' pz tau
+
+-- | Weierstrass zeta function given the elliptic invariants
+weierstrassZeta' ::
+    Complex Double -- ^ z
+ -> Complex Double -- ^ elliptic invariant g2
+ -> Complex Double -- ^ elliptic invariant g3
+ -> Complex Double
+weierstrassZeta' z g2 g3 = weierstrassZeta z omega1 omega2
+  where
+    (omega1, omega2) = halfPeriods g2 g3

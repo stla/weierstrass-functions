@@ -5,16 +5,12 @@
 
 packages:
 - completed:
-    commit: bec442d433a2c7ce39229e6a89232779d32db596
-    git: https://github.com/stla/jacobi-theta.git
-    name: jacobi-theta
+    hackage: jacobi-theta-0.2.2.0@sha256:a5e1f55e725099a4fa3693c5c09b2cf9d6a07285badb2e69e58ba5d360814f43,1577
     pantry-tree:
-      sha256: e46e4f146390f11c45aefb0b815e0c4b2b94067e684115ecf27e39abaec6a9b0
-      size: 772
-    version: 0.2.2.0
+      sha256: 428246926304e95351f64ca3e2764192064e8a660603ea5d7c888f384c701e7e
+      size: 429
   original:
-    commit: bec442d433a2c7ce39229e6a89232779d32db596
-    git: https://github.com/stla/jacobi-theta.git
+    hackage: jacobi-theta-0.2.2.0
 - completed:
     hackage: elliptic-integrals-0.1.0.0@sha256:f96e03260c1fc51f8e1a65ef2d4d36600ac36eac5d50c41a444b676791cd9292,1484
     pantry-tree:

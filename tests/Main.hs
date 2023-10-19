@@ -14,11 +14,11 @@ import           Test.Tasty           ( defaultMain, testGroup )
 import           Test.Tasty.HUnit     ( testCase )
 import           Math.Weierstrass     ( halfPeriods, 
                                         ellipticInvariants,
-                                        weierstrassP,
-                                        weierstrassPdash,
-                                        weierstrassPinv,
-                                        weierstrassSigma,
-                                        weierstrassZeta )
+                                        weierstrassP',
+                                        weierstrassPdash',
+                                        weierstrassPinv',
+                                        weierstrassSigma',
+                                        weierstrassZeta' )
 
 i_ :: Complex Double
 i_ = 0.0 :+ 1.0
@@ -97,14 +97,14 @@ main = defaultMain $
       let z = 0.1 :+ 0.1
           g2 = 2 :+ 1
           g3 = 2 :+ (-1)
-          obtained = weierstrassP z g2 g3
+          obtained = weierstrassP' z g2 g3
           expected = (-0.0010285443715) :+ (-49.9979857342848)
       assertApproxEqual "" 11 expected obtained,
 
     testCase "Equianharmonic case" $ do
       let omega2 = gamma (1/3) ** 3 / 4 / pi
           z0 = omega2 * (1 :+ (1 / sqrt 3))
-          obtained = weierstrassP z0 0 1
+          obtained = weierstrassP' z0 0 1
           expected = 0
       assertApproxEqual "" 13 obtained expected,
 
@@ -112,8 +112,8 @@ main = defaultMain $
       let z = 1 :+ 1
           g2 = 5 :+ 3
           g3 = 2 :+ 7
-          w = weierstrassP z g2 g3
-          wdash = weierstrassPdash z g2 g3
+          w = weierstrassP' z g2 g3
+          wdash = weierstrassPdash' z g2 g3
           left = wdash ** 2
           right = 4 * w ** 3 - g2 * w - g3
       assertApproxEqual "" 11 left right,
@@ -122,8 +122,8 @@ main = defaultMain $
       let w = 0.1 :+ 1
           g2 = 2 :+ 2
           g3 = 0 :+ 3
-          z = weierstrassPinv w g2 g3
-          obtained = weierstrassP z g2 g3
+          z = weierstrassPinv' w g2 g3
+          obtained = weierstrassP' z g2 g3
           expected = w
       assertApproxEqual "" 13 expected obtained,
 
@@ -140,14 +140,14 @@ main = defaultMain $
 
     testCase "a value of weierstrassSigma" $ do
       let expected = 1.8646253716 :+ (-0.3066001355)
-          obtained = weierstrassSigma 2 1 (2 * i_)
+          obtained = weierstrassSigma' 2 1 (2 * i_)
       assertApproxEqual "" 10 expected obtained,
 
     testCase "a value of weierstrassZeta" $ do
       let g2 = 5 :+ 3
           g3 = 5 :+ 3
           expected = 0.802084165492408 :+ (-0.381791358666872)
-          obtained = weierstrassZeta (1 :+ 1) g2 g3
+          obtained = weierstrassZeta' (1 :+ 1) g2 g3
       assertApproxEqual "" 13 expected obtained
 
   ]
